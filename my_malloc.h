@@ -49,5 +49,12 @@ void *my_malloc(size_t size);
 
 void my_free(void *ptr);
 void my_malloc_print_state(void);
+/*
+ * Check a pointer: returns
+ *   0 -> pointer not in arena
+ *   1 -> pointer in arena and allocated
+ *   2 -> pointer in arena and free
+ */
+int my_malloc_check_ptr(void *ptr);
 
 #endif

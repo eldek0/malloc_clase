@@ -127,3 +127,22 @@ void my_free(void *ptr) {
     BlockHeader *block = (BlockHeader *)ptr - 1;
     block->is_free = 1;
 }
+
+int my_malloc_check_ptr(void *ptr) {
+    if (ptr == NULL || first_block == NULL) return 0;
+
+    BlockHeader *current = first_block;
+
+    while (current != NULL) {
+        void *user_start = (void *)(current + 1);
+        void *user_end = (void *)((char *)user_start + current->size);
+
+        if (ptr >= user_start && ptr < user_end) {
+            return current->is_free ? 2 : 1;
+        }
+
+        current = current->next;
+    }
+
+    return 0; /* not in arena */
+}
