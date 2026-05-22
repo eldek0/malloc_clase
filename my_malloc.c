@@ -110,3 +110,20 @@ void *my_malloc(size_t size) {
 
     return (void *)(block + 1); /* Return the address immediately after the header. */
 }
+
+void my_malloc_print_state(void) {
+    BlockHeader *current = first_block;
+    while (current != NULL) {
+        printf("%p %s size=%zu\n",
+            (void *)current,
+            current->is_free ? "FREE" : "USED",
+            current->size);
+        current = current->next;
+    }
+}
+void my_free(void *ptr) {
+    if (ptr == NULL) return;
+
+    BlockHeader *block = (BlockHeader *)ptr - 1;
+    block->is_free = 1;
+}

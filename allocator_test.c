@@ -60,10 +60,20 @@ int main(int argc, char *argv[]) {
             printf("%p\n", ptr);
         }
 
-        /*
-         * q
-         */
+        else if (strcmp(cmd, "p") == 0) {
+            my_malloc_print_state();
+        }
 
+        else if (strcmp(cmd, "f") == 0) {
+            char *arg = strtok(NULL, " \t\n");
+            if (arg == NULL) {
+                fprintf(stderr, "missing address\n");
+                continue;
+            }
+            void *ptr = NULL;
+            sscanf(arg, "%p", &ptr);
+            my_free(ptr);
+        }
         else if (strcmp(cmd, "q") == 0) {
 
             break;
